@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Alumnos</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
+    />
+  </head>
+  <body class="container mt-5">
+    <div class="alert alert-info display-1 text-center">LISTADO DE ALUMNOS</div>
+
+    {% if alumnos %}
+
+    <table class="table table-striped table-inverse table-responsive">
+      <thead class="thead-inverse">
+        <tr>
+          <th>DNI</th>
+          <th>Dirección</th>
+          <th>Telefono</th>
+          <th>Edad</th>
+          <th>Opciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for a in alumnos %}
+        <tr>
+          <td scope="row">{{a.dni}}</td>
+          <td>{{a.direccion}}</td>
+          <td>{{a.telefono}}</td>
+          <td>{{a.edad}}</td>
+          <td>
+            <a href="/actualizarAlumno/{{a.id}}" class="btn btn-success btn-sm"
+              ><i class="bi bi-pencil"></i
+            ></a>
+            <a href="/eliminarAlumno/{{a.id}}" class="btn btn-danger btn-sm"
+              ><i class="bi bi-trash"></i
+            ></a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    {% else %}
+
+    <div class="alert alert-primary" role="alert">
+      <strog>No se encuentran alumnos registrados en el sistema.</strog>
+    </div>
+
+    {% endif %}
+
+    <a href="../" class="btn btn-danger">VOLVER</a>
+    <a href="/registrar" class="btn btn-info float-end">AGREGAR ALUMNO</a>
+  </body>
+</html>
