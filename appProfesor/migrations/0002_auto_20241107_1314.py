@@ -14,16 +14,16 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='profesor',
             name='dni',
-            field=models.CharField(max_length=30, validators=[appProfesor.models.validnumeros]),
+            field=models.CharField(max_length=30),
         ),
         migrations.AlterField(
             model_name='profesor',
             name='nombre',
-            field=models.CharField(max_length=30, validators=[appProfesor.models.validnombre]),
+            field=models.CharField(max_length=30),
         ),
         migrations.AlterField(
             model_name='profesor',
             name='telefono',
-            field=models.CharField(max_length=30, validators=[appProfesor.models.validnumeros]),
+            field=models.CharField(max_length=30),
         ),
     ]

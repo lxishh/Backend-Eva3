@@ -1,6 +1,7 @@
 from django import forms
 from django.core.validators import RegexValidator, MinValueValidator, MaxValueValidator
 from appAlumno.models import Alumno, Curso
+from django.core.exceptions import ValidationError
 
 class FormularioAlumno(forms.ModelForm):
     dni = forms.CharField(
@@ -52,3 +53,33 @@ class FormularioCurso(forms.ModelForm):
     class Meta:
         model = Curso
         fields = ['codigo', 'horas', 'nombre', 'descripcion', 'fecha_inicio', 'fecha_fin', 'seccion', 'profesor']
+
+    def vcodigo(self):
+        codigo = self.cleaned_data.get('codigo')
+        if not codigo.isalnum():
+            raise ValidationError("El código debe contener letras y numeros.") #el codigo tiene que tener letras y numeros
+        return codigo
+
+    def vhoras(self):
+        horas = self.cleaned_data.get('horas')
+        if horas <= 0:
+            raise ValidationError("Las horas deben ser mayores a 0.")  #horas tienen q ser mayor a 0
+        return horas
+
+    def vnombre(self):
+        nombre = self.cleaned_data.get('nombre')  
+        if not all(x.isalpha() or x.isspace() for x in nombre):
+            raise ValidationError("El nombre debe contener solo letras y espacios.")   #tiene q tener letras y espacios gracias al metodo isalpha y isspace
+        return nombre
+
+    def vdescripcion(self):
+        descripcion = self.cleaned_data.get('descripcion')
+        if not descripcion:
+            raise ValidationError("La descripción no puede estar vacía.")  #la descripcion no debe estar vacia
+        return descripcion
+
+    def vseccion(self):
+        seccion = self.cleaned_data.get('seccion')
+        if not seccion.isalnum():
+            raise ValidationError("La sección debe contener letras y numeros.") #la seccion tiene que contener letras y numeros
+        return seccion

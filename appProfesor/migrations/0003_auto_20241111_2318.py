@@ -18,7 +18,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='profesor',
             name='dni',
-            field=models.CharField(max_length=10, unique=True, validators=[appProfesor.models.validnumeros]),
+            field=models.CharField(max_length=10, unique=True),
         ),
         migrations.AlterModelTable(
             name='profesor',
