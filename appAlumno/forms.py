@@ -1,6 +1,6 @@
 from django import forms
 from django.core.validators import RegexValidator, MinValueValidator, MaxValueValidator
-from appAlumno.models import Alumno
+from appAlumno.models import Alumno, Curso
 
 class FormularioAlumno(forms.ModelForm):
     dni = forms.CharField(
@@ -38,3 +38,8 @@ class FormularioAlumno(forms.ModelForm):
     class Meta:
         model = Alumno
         fields = '__all__'
+
+class FormularioCurso(forms.ModelForm):
+    class Meta:
+        model = Curso
+        fields = ['codigo', 'horas', 'nombre', 'descripcion', 'fecha_inicio', 'fecha_fin', 'seccion', 'profesor']

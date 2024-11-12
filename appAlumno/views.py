@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
-from appAlumno.models import Alumno
-from appAlumno.forms import FormularioAlumno
+from appAlumno.models import Alumno, Curso
+from appAlumno.forms import FormularioAlumno, FormularioCurso
 
 # Create your views here.
 def index(request):
@@ -40,3 +40,39 @@ def actualizarAlumno(request, id):
         form = FormularioAlumno(instance=alumno)
     data = {'form':form}
     return render(request, 'registrarAlumnos.html', data)
+
+# Cursos
+def listadoCursos(request):
+    cursos = Curso.objects.all
+    data = {'cursos':cursos}
+    return render(request, 'listadoCursos.html', data)
+
+def agregarCurso(request):
+    form = FormularioCurso()
+    if request.method == 'POST':
+        form = FormularioCurso(request.POST)
+        if form.is_valid():
+            form.save()
+            return index(request)
+    else:
+        FormularioCurso()
+    data = {'form':form}
+    return render(request, 'agregarCurso.html', data)
+
+def eliminarCurso(request, id):
+    curso = Curso.objects.get(id=id)
+    curso.delete()
+    return redirect('/cursos')
+
+def actualizarCurso(request, id):
+    curso = Curso.objects.get(id=id)
+    form = FormularioCurso(instance=curso)
+    if request.method == 'POST':
+        form = FormularioCurso(request.POST, instance=curso)
+        if form.is_valid():
+            form.save()
+            return index(request)
+    else:
+        form = FormularioCurso(instance=curso)
+    data = {'form':form}
+    return render(request, 'agregarCurso.html', data)

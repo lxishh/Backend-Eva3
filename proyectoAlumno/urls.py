@@ -29,4 +29,8 @@ urlpatterns = [
     path('agregarProfesor/',appProfesor.agregarProfesor),
     path('eliminarProfesor/<int:id>',appProfesor.eliminarProfesor),
     path('actualizarProfesor/<int:id>',appProfesor.actualizarProfesor),
+    path('cursos/', appAlumno.listadoCursos),
+    path('agregarCurso/', appAlumno.agregarCurso),
+    path('actualizarCurso/<int:id>', appAlumno.actualizarCurso),
+    path('eliminarCurso/<int:id>', appAlumno.eliminarCurso)
 ]
