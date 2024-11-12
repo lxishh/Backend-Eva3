@@ -28,6 +28,7 @@
           <th>Fecha de Fin</th>
           <th>Sección</th>
           <th>Profesor</th>
+          <th>Alumnos</th>
           <th>Opciones</th>
         </tr>
       </thead>
@@ -42,6 +43,20 @@
           <td>{{ curso.fecha_fin }}</td>
           <td>{{ curso.seccion }}</td>
           <td>{{ curso.profesor.nombre }}</td>
+          <td>
+            {% if curso.alumnos.all %}
+
+            <ul>
+              {% for alumno in curso.alumnos.all %}
+              <li>{{ alumno.nombre }}</li>
+              {% endfor %}
+            </ul>
+
+            {% else %}
+            <p>No hay alumnos inscritos.</p>
+            {% endif %}
+          </td>
+
           <td>
             <a
               href="/actualizarCurso/{{ curso.id }}"

@@ -1,12 +1,23 @@
 from django.db import models
 from appProfesor.models import Profesor
+from django.core.exceptions import ValidationError
+
 
 # Create your models here.
 class Alumno(models.Model):
     dni = models.CharField(max_length=10, unique=True)
+    nombre = models.CharField(max_length=30, default="Desconocido")
     direccion = models.CharField(max_length=50)
     telefono = models.CharField(max_length=9)
     edad = models.PositiveIntegerField()
+    #relacion con curso:
+    cursos = models.ManyToManyField("Curso", related_name="alumnos")
+
+    def datos_alumno(self):
+        return "{}, {}".format(self.nombre, self.dni)
+    
+    def __str__(self):
+        return self.datos_alumno()
 
 class Curso(models.Model):
     codigo = models.CharField(max_length=10, unique=True)

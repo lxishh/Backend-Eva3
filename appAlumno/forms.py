@@ -12,6 +12,15 @@ class FormularioAlumno(forms.ModelForm):
         help_text="<p class='text-muted'>Ejemplo: 12345678-K o 12345678-1</p>"
     )
 
+    nombre = forms.CharField(
+        max_length=30,
+        validators=[RegexValidator(
+            r'^[A-Za-z\s]+$', 
+            'El nombre debe contener solo letras y espacios'
+        )],
+        help_text="<p class='text-muted'>Ejemplo: Luis Henríquez</p>"
+    )
+
     direccion = forms.CharField(
         max_length=50,
         validators=[RegexValidator(

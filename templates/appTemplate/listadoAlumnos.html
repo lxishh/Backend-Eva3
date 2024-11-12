@@ -22,9 +22,11 @@
       <thead class="thead-inverse">
         <tr>
           <th>DNI</th>
+          <th>Nombre</th>
           <th>Dirección</th>
           <th>Telefono</th>
           <th>Edad</th>
+          <th>Cursos</th>
           <th>Opciones</th>
         </tr>
       </thead>
@@ -32,9 +34,23 @@
         {% for a in alumnos %}
         <tr>
           <td scope="row">{{a.dni}}</td>
+          <td>{{a.nombre}}</td>
           <td>{{a.direccion}}</td>
           <td>{{a.telefono}}</td>
           <td>{{a.edad}}</td>
+          <td>
+            {% if a.cursos.all %}
+
+            <ul>
+              {% for curso in a.cursos.all %}
+              <li>{{ curso.nombre }}</li>
+              {% endfor %}
+            </ul>
+
+            {% else %}
+            <p>No inscrito en cursos.</p>
+            {% endif %}
+          </td>
           <td>
             <a href="/actualizarAlumno/{{a.id}}" class="btn btn-success btn-sm"
               ><i class="bi bi-pencil"></i

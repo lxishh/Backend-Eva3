@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from appAlumno.models import Alumno, Curso
 from appAlumno.forms import FormularioAlumno, FormularioCurso
 
@@ -7,7 +7,7 @@ def index(request):
     return render(request, 'index.html')
 
 def listarAlumnos(request):
-    alumnos = Alumno.objects.all
+    alumnos = Alumno.objects.all()
     data = {'alumnos':alumnos}
     return render(request, 'listadoAlumnos.html', data)
 
@@ -43,7 +43,7 @@ def actualizarAlumno(request, id):
 
 # Cursos
 def listadoCursos(request):
-    cursos = Curso.objects.all
+    cursos = Curso.objects.all()
     data = {'cursos':cursos}
     return render(request, 'listadoCursos.html', data)
 
@@ -55,7 +55,7 @@ def agregarCurso(request):
             form.save()
             return index(request)
     else:
-        FormularioCurso()
+        form = FormularioCurso()
     data = {'form':form}
     return render(request, 'agregarCurso.html', data)
 
@@ -76,3 +76,16 @@ def actualizarCurso(request, id):
         form = FormularioCurso(instance=curso)
     data = {'form':form}
     return render(request, 'agregarCurso.html', data)
+
+#ManyToMany (Alumno y Curso)
+# def cursos_de_alumno(request, alumno_id):
+#     alumno = get_object_or_404(Alumno, id=alumno_id)
+#     cursos = alumno.cursos.all()
+#     data = {'alumno':alumno, 'cursos':cursos}
+#     return render(request, 'cursosDeAlumno.html', data)
+
+# def alumnos_de_curso(request, curso_id):
+#     curso = get_object_or_404(Curso, id=curso_id)
+#     alumnos = curso.alumnos.all()
+#     data = {'curso':curso, 'alumnos':alumnos}
+#     return render(request, 'alumnosDeCurso.html', data)
