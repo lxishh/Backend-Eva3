@@ -3,13 +3,6 @@ from django.core.validators import RegexValidator, MinValueValidator, MaxValueVa
 from django.core.exceptions import ValidationError
 from appProfesor.models import Profesor
 
-
-def validar_edad(valor):
-    if valor <= 0:
-        raise ValidationError('La edad debe ser un número positivo.')
-    elif valor > 120:
-        raise ValidationError('La edad no es válida.')
-
 class FormProfesor(forms.ModelForm):
     dni = forms.CharField(
         max_length=10,
@@ -45,11 +38,6 @@ class FormProfesor(forms.ModelForm):
             'El teléfono debe comenzar con 9 y tener 9 dígitos en total'
         )],
         help_text="<p class='text-muted'>Ejemplo: <strong>9</strong>87654321</p>"
-    )
-
-    edad = forms.IntegerField(
-        validators=[validar_edad],
-        help_text="<p class='text-muted'>Ingrese una edad razonable entre 1 y 120 años.</p>"
     )
 
     class Meta:

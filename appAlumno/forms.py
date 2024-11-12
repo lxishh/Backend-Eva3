@@ -28,7 +28,7 @@ class FormularioAlumno(forms.ModelForm):
             r'^[A-Za-z\s]+ #\d+$', 
             'La dirección debe tener el nombre de la calle, seguido de # y un número'
         )],
-        help_text="<p class='text-muted'>Ejemplo: Ramon Carnicer #2003</p>"
+        help_text="<p class='text-muted'>Ejemplo: 11 de Septiembre #420</p>"
     )
 
     telefono = forms.CharField(
@@ -37,7 +37,7 @@ class FormularioAlumno(forms.ModelForm):
             r'^9\d{8}$', 
             'El teléfono debe comenzar con 9 y tener 9 dígitos en total'
         )],
-        help_text="<p class='text-muted'> Ejemplo: <strong>9</strong>50501230</p>"
+        help_text="<p class='text-muted'> Ejemplo: <strong>9</strong>50502430</p>"
     )
     
     edad = forms.IntegerField(

@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from appAlumno.models import Alumno, Curso
+from appAlumno.models import Alumno, Curso, Matricula
 from appAlumno.forms import FormularioAlumno, FormularioCurso
 
 # Create your views here.
@@ -17,7 +17,7 @@ def registrarAlumnos(request):
         form = FormularioAlumno(request.POST)
         if form.is_valid():
             form.save()
-            return index(request)
+            return redirect('/alumnos')
     else:
         form = FormularioAlumno()
     data = {'form':form}
@@ -35,7 +35,7 @@ def actualizarAlumno(request, id):
         form = FormularioAlumno(request.POST, instance=alumno)
         if form.is_valid():
             form.save()
-            return index(request)
+            return redirect('/alumnos')
     else:
         form = FormularioAlumno(instance=alumno)
     data = {'form':form}
@@ -53,7 +53,7 @@ def agregarCurso(request):
         form = FormularioCurso(request.POST)
         if form.is_valid():
             form.save()
-            return index(request)
+            return redirect('/cursos')
     else:
         form = FormularioCurso()
     data = {'form':form}
@@ -71,21 +71,23 @@ def actualizarCurso(request, id):
         form = FormularioCurso(request.POST, instance=curso)
         if form.is_valid():
             form.save()
-            return index(request)
+            return redirect('/cursos')
     else:
         form = FormularioCurso(instance=curso)
     data = {'form':form}
     return render(request, 'agregarCurso.html', data)
 
 #ManyToMany (Alumno y Curso)
-# def cursos_de_alumno(request, alumno_id):
-#     alumno = get_object_or_404(Alumno, id=alumno_id)
-#     cursos = alumno.cursos.all()
-#     data = {'alumno':alumno, 'cursos':cursos}
-#     return render(request, 'cursosDeAlumno.html', data)
+def cursos_de_alumno(request, alumno_id):
+    alumno = get_object_or_404(Alumno, id=alumno_id)
+    cursos = alumno.cursos.all()
+    data = {'alumno': alumno, 'cursos': cursos}
+    return render(request, 'cursosDeAlumno.html', data)
 
-# def alumnos_de_curso(request, curso_id):
-#     curso = get_object_or_404(Curso, id=curso_id)
-#     alumnos = curso.alumnos.all()
-#     data = {'curso':curso, 'alumnos':alumnos}
-#     return render(request, 'alumnosDeCurso.html', data)
+def alumnos_de_curso(request, curso_id):
+    curso = get_object_or_404(Curso, id=curso_id)
+    # Obtener los alumnos matriculados en el curso  -  (a través de la tabla Matricula)
+    matriculas = Matricula.objects.filter(curso=curso)
+    alumnos = [matricula.alumno for matricula in matriculas]  # Obtener la lista de alumnos
+    data = {'curso': curso, 'alumnos': alumnos}
+    return render(request, 'alumnosDeCurso.html', data)

@@ -35,6 +35,8 @@ def actualizarProfesor(request,id):
         form = FormProfesor(request.POST,instance=profesor)
         if form.is_valid():
             form.save()
-        return index(request)
+            return redirect('/profesores')
+    else:
+        form = FormProfesor(instance=profesor)
     data = {'form':form}
     return render(request,'agregarProfesor.html',data)
