@@ -3,8 +3,9 @@ from appAlumno.models import Alumno, Curso
 from appProfesor.models import Profesor
 
 class AlumnoAdmin(admin.ModelAdmin):
-    list_display = ['dni', 'direccion', 'telefono', 'edad']
-
+    list_display = ['dni', 'nombre', 'direccion', 'telefono', 'edad']
+    filter_horizontal = ('cursos',)
+    
 class ProfesorAdmin(admin.ModelAdmin):
     list_display = ['dni', 'nombre', 'direccion', 'telefono']
 
