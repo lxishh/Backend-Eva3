@@ -1,5 +1,6 @@
 from django.db import models
 from appProfesor.models import Profesor
+from django.core.exceptions import ValidationError
 
 
 class Alumno(models.Model):
@@ -27,6 +28,11 @@ class Curso(models.Model):
     fecha_fin = models.DateField()
     seccion = models.CharField(max_length=20)  # antes numero
     profesor = models.ForeignKey(Profesor, on_delete=models.CASCADE)
+
+    def clean(self):
+        super().clean()
+        if self.fecha_inicio > self.fecha_fin:
+            raise ValidationError("La fecha de inicio no puede ser después de la fecha de termino.")
 
     def datos_curso(self):
         return "{}, {}".format(self.nombre, self.codigo)

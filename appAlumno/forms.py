@@ -83,3 +83,5 @@ class FormularioCurso(forms.ModelForm):
         if not seccion.isalnum():
             raise ValidationError("La sección debe contener letras y numeros.") #la seccion tiene que contener letras y numeros
         return seccion
+    
+    
